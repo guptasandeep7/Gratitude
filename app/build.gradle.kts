@@ -94,6 +94,9 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
     //Material 3
     implementation("androidx.compose.material:material:1.5.4")
+    //to change status bar color
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.30.1")
+
 }
 kapt {
     correctErrorTypes = true

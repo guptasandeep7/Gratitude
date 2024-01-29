@@ -1,6 +1,8 @@
 package com.sandeepgupta.gratitude.util
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -9,9 +11,9 @@ import androidx.core.content.FileProvider
 import androidx.core.graphics.drawable.toBitmap
 import coil.ImageLoader
 import coil.request.ImageRequest
-import com.sandeepgupta.gratitude.model.CardModel
-import com.sandeepgupta.gratitude.model.SocialMediaModel
-import com.sandeepgupta.gratitude.model.socialMediaList
+import com.sandeepgupta.gratitude.domain.model.CardModel
+import com.sandeepgupta.gratitude.domain.model.SocialMediaModel
+import com.sandeepgupta.gratitude.domain.model.socialMediaList
 import java.io.File
 import java.io.FileOutputStream
 
@@ -76,4 +78,18 @@ fun intent(
         "${cardItem.sharePrefix} ${cardItem.articleUrl}"
     )
     return shareIntent
+}
+
+fun copyText(
+    context: Context,
+    selectedCard: CardModel?
+) {
+    val clipboardManager =
+        context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clipData: ClipData = ClipData.newPlainText(
+        "text",
+        if (selectedCard!!.text == "") selectedCard.articleUrl
+        else "${selectedCard.text} ${selectedCard.author}"
+    )
+    clipboardManager.setPrimaryClip(clipData)
 }
